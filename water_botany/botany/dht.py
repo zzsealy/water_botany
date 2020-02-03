@@ -1,78 +1,66 @@
-import RPi.GPIO as gpio
+import RPi.GPIO as GPIO
 import time
-gpio.setwarnings(False)
-gpio.setmode(gpio.BOARD)
+ 
+channel =2 
+data = []
+j = 0
+ 
+GPIO.setmode(GPIO.BCM)
+ 
 time.sleep(1)
-data=[]
-def delay(i): #20*i usdelay
-    a=0
-    for j in range(i):
-        a+1
-j=0
-#start work
-gpio.setup(12,gpio.OUT)
-#gpio.output(12,gpio.HIGH)
-#delay(10)
-gpio.output(12,gpio.LOW)
+ 
+GPIO.setup(channel, GPIO.OUT)
+GPIO.output(channel, GPIO.LOW)
 time.sleep(0.02)
-gpio.output(12,gpio.HIGH)
-i=1
-i=1
-  
-#wait to response
-gpio.setup(12,gpio.IN)
+GPIO.output(channel, GPIO.HIGH)
+GPIO.setup(channel, GPIO.IN)
  
+while GPIO.input(channel) == GPIO.LOW:
+  continue
+while GPIO.input(channel) == GPIO.HIGH:
+  continue
  
-while gpio.input(12)==1:
+while j < 40:
+  k = 0
+  while GPIO.input(channel) == GPIO.LOW:
     continue
+  while GPIO.input(channel) == GPIO.HIGH:
+    k += 1
+    if k > 100:
+      break
+  if k < 8:
+    data.append(0)
+  else:
+    data.append(1)
  
+  j += 1
  
-while gpio.input(12)==0:
-    continue
+print("sensor is working.")
+print(data)
  
-while gpio.input(12)==1:
-        continue
-#get data
+humidity_bit = data[0:8]
+humidity_point_bit = data[8:16]
+temperature_bit = data[16:24]
+temperature_point_bit = data[24:32]
+check_bit = data[32:40]
  
-while j<40:
-    k=0
-    while gpio.input(12)==0:
-        continue
-     
-    while gpio.input(12)==1:
-        k+=1
-        if k>100:break
-    if k<3:
-        data.append(0)
-    else:
-        data.append(1)
-    j+=1
- 
-print("Sensor is working")
-#get temperature
-humidity_bit=data[0:8]
-humidity_point_bit=data[8:16]
-temperature_bit=data[16:24]
-temperature_point_bit=data[24:32]
-check_bit=data[32:40]
- 
-humidity=0
-humidity_point=0
-temperature=0
-temperature_point=0
-check=0
- 
- 
+humidity = 0
+humidity_point = 0
+temperature = 0
+temperature_point = 0
+check = 0
  
 for i in range(8):
-    humidity+=humidity_bit[i]*2**(7-i)
-    humidity_point+=humidity_point_bit[i]*2**(7-i)
-    temperature+=temperature_bit[i]*2**(7-i)
-    temperature_point+=temperature_point_bit[i]*2**(7-i)
-    check+=check_bit[i]*2**(7-i)
+  humidity += humidity_bit[i] * 2 ** (7-i)
+  humidity_point += humidity_point_bit[i] * 2 ** (7-i)
+  temperature += temperature_bit[i] * 2 ** (7-i)
+  temperature_point += temperature_point_bit[i] * 2 ** (7-i)
+  check += check_bit[i] * 2 ** (7-i)
  
-tmp=humidity+humidity_point+temperature+temperature_point
-if check==tmp:
-    print("temperature is ", temperature,"wet is ",humidity,"%")
+tmp = humidity + humidity_point + temperature + temperature_point
+ 
+if check == tmp:
+  print("temperature :", temperature, "*C, humidity :", humidity, "%")
 else:
-    print("something is worong the humidity,humidity_point,temperature,temperature_point,check is",humidity,humidity_point,temperature,temperature_point,check)
+  print("wrong")
+  print("temperature :", temperature, "*C, humidity :", humidity, "% check :", check, ", tmp :", tmp)
