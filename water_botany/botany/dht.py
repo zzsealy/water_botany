@@ -1,7 +1,7 @@
 import RPi.GPIO as GPIO
 import time
 
-channel = 02
+channel = 2
 data = []
 j = 0
 
@@ -9,13 +9,17 @@ GPIO.setmode(GPIO.BCM)
 
 time.sleep(1)
 
-GPIO.setup(channel, GPIO.OUT)
-GPIO.output(channel, GPIO.LOW)
-time.sleep(0.02)
-GPIO.output(channel, GPIO.HIGH)
-GPIO.setup(channel, GPIO.IN)
+# 总线空闲状态为高电平，主机把总线拉低等待DHT11响应，主机把总线拉低必须大于18毫秒，
+# 保证DHT11能检测到起始信号。
+GPIO.setup(channel, GPIO.OUT) # 将引脚设为输出模式
+GPIO.output(channel, GPIO.LOW) # 输出低电平
+time.sleep(0.018)
+# 主机发送开始信号后，可以切换到输入模式，或者输出高电平均可，总线由上拉电阻拉高。
+GPIO.output(channel, GPIO.HIGH) # 输出高电平
+GPIO.setup(channel, GPIO.IN) # 将引脚设为输入模式
 
-while GPIO.input(channel) == GPIO.LOW:
+
+while GPIO.input(channel) == GPIO.LOW:  # 读取引脚的输入状态
     continue
 while GPIO.input(channel) == GPIO.HIGH:
     continue
