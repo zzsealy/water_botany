@@ -1,7 +1,7 @@
 import RPi.GPIO as GPIO
 import time
 
-channel = 2
+channel = 02
 data = []
 j = 0
 
@@ -66,15 +66,4 @@ else:
     print("temperature :", temperature, "*C, humidity :",
           humidity, "% check :", check, ", tmp :", tmp)
 
-mytemp = '%f' % temperature
-myhumi = '%f' % humidity
-
-tmp_output = open('/home/pi/dht11/tmp_data.txt', 'w')
-hud_output = open('/home/pi/dht11/hum_data.txt', 'w')
-
-tmp_output.write(mytemp)
-hud_output.write(myhumi)
-
-tmp_output.close
-hud_output.close
 GPIO.cleanup()
