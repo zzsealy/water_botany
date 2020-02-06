@@ -78,9 +78,9 @@ def get_dht11(dht11_pin):
     # print "tmp - ",tmp_int
     return [hum_int,tmp_int]
  
-GPIO.setmode(GPIO.BOARD)
-init_dht11(7)
-print get_dht11(7)
+GPIO.setmode(GPIO.BCM)
+init_dht11(2)
+print get_dht11(2)
 GPIO.cleanup()
  
 # 注意
