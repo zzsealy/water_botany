@@ -7,8 +7,9 @@ print("Exit: Q and q")
 while True:
     user_choice=input("Choice:")
     if user_choice=="PC-ON":        
-          GPIO.setup(20,GPIO.OUT)    
-          GPIO.output(20,GPIO.LOW)
+          GPIO.setmode(GPIO.BCM)     
+          GPIO.setup(25,GPIO.OUT)    
+          GPIO.output(25,GPIO.LOW)
           print("3")
           time.sleep(1.0)            
           print("2")
@@ -17,4 +18,4 @@ while True:
           time.sleep(1.0)            
           GPIO.cleanup() 
     elif user_choice=="q" or user_choice=="Q":      
-          GPIO.cleanup()   
+          GPIO.cleanup()         
