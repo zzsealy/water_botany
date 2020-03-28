@@ -2,8 +2,6 @@
 # -*- coding: UTF-8 -*-
 import RPi.GPIO as GPIO
 import time
-        
-
 
 def start_realy(num):
     GPIO.setmode(GPIO.BCM)     
@@ -19,12 +17,13 @@ def start_realy(num):
     print("浇水结束")
 
 
-channel = 21 #管脚40，参阅树莓派引脚图，物理引脚40对应的BCM编码为21
 
-GPIO.setmode(GPIO.BCM)
-GPIO.setup(channel, GPIO.IN)
 
 while True:
+        channel = 21 #管脚40，参阅树莓派引脚图，物理引脚40对应的BCM编码为21
+        GPIO.setmode(GPIO.BCM)
+        GPIO.setup(channel, GPIO.IN)
+
         if GPIO.input(channel) == GPIO.LOW:
                 print("土壤检测结果：潮湿")
         else:
