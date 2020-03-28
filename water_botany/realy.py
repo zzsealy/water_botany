@@ -17,7 +17,7 @@ def start_realy(num):
     print("浇水结束")
 
 
-start_realy(3.0)
+
  
  
 
