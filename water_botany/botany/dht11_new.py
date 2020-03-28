@@ -10,7 +10,7 @@ GPIO.setmode(GPIO.BCM)		#以BCM编码格式
 time.sleep(1)			#时延一秒
 GPIO.setup(channel, GPIO.OUT)
 GPIO.output(channel, GPIO.LOW)
-time.sleep(0.02)		#给信号提示传感器开始工作
+time.sleep(0.17)		#给信号提示传感器开始工作
 GPIO.output(channel, GPIO.HIGH)
 GPIO.setup(channel, GPIO.IN)
  
