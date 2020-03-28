@@ -12,8 +12,8 @@ GPIO.setup(channel, GPIO.IN)
 
 while True:
         if GPIO.input(channel) == GPIO.LOW:
-                print "土壤检测结果：潮湿"
+                print("土壤检测结果：潮湿")
         else:
-                print "土壤检测结果：干燥"
+                print("土壤检测结果：干燥")
                 start_realy(3)
         time.sleep(1)
