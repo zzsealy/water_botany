@@ -1,7 +1,7 @@
 from flask import Flask, render_template, Response
  
 # Raspberry Pi camera module (requires picamera package, developed by Miguel Grinberg)
-from water_botany.camera_pi import camera_pi
+from water_botany.camera_pi import Camera
 app = Flask(__name__)
  
 @app.route('/')
