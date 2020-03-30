@@ -1,1 +1,2 @@
 FLASK_ENV=development
+FLASK_APP=water_botany
