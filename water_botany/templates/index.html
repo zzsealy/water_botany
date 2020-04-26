@@ -1,18 +1,28 @@
 {% extends "base.html" %}
 
+{% block title %} 植物养护系统 {% endblock %}
  {% block content %}
-    <h1>植物养护系统</h1>
-    <hr>
-    <hr>
+    <div class="container">
+    <h1> 植物养护系统 </h1>
+    <a class="logout" href="{{ url_for('.logout') }}">注销</a> 
+   
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
     <h3> 温度: {{ templateData.temp }} 摄氏度</h3>
     <h3> 湿度: {{ templateData.hum }} %</h3>
     <hr>
     <h3> 最后一次数据读取时间: {{ templateData.time }} : <a href="/" class="btn btn-default">检测温湿度</a></h3> <!-- 链接刷新页面 -->
     <hr>
-    <h3> 视频查看植物状态 : <a href="/camera" class="btn btn-default">LIVE</a></h3>
+    <h3> 点击视频观察植物 : <a href="/camera" class="btn btn-default">LIVE</a></h3>
     <hr>
-    <h3> 浇水操作： <button id="botany_onclick" class="btn btn-default">点击浇水</button></h3>
+    <h3> 浇水操作: <button id="botany_onclick" class="btn btn-default">点击浇水</button></h3>
     <hr>
+    <h3>邮件测试: <button id="send_mail" class="btn btn-default">发送邮件</button></h3>
+    </div>
 {% endblock %}
 
 

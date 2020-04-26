@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% from 'bootstrap/form.html' import render_form %}
+
+{% block title %} 登陆页面 {% endblock %}
+
+{% block content %}
+<h1>登陆</h1>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+
+<div class="container">
+    <div class="row h-100 justify-content-center align-items-center">
+    {{ render_form(form) }}
+    </div>
+</div>
+{% endblock %}

@@ -18,26 +18,47 @@
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
         crossorigin="anonymous"></script>
 
-    <title>植物养护系统</title>
-    <link rel="stylesheet" href='../static/style.css' />
+    <title>{% block title %} {% endblock title %}</title>
+    <link href="{{ url_for('static', filename='style.css') }}" />
     <script type=text/javascript>
+    var data1 = {
+                data: JSON.stringify({
+                    'ok' : 1
+                }),
+            }
+    var data2 = {
+                data: JSON.stringify({
+                    'ok' : 2
+                }),
+            }
                 $(function(){
                 $("#botany_onclick").on('click',function (event) {
                   $.ajax({
                       url:'/',
                       type:'POST',
-                      data: 'ok',
-                      success : console.log("ok")
+                      dataType:'json',
+                      data:data1
                 })
                 })
             })
-            </script>
+            $(function(){
+                $("#send_mail").on('click',function (event) {
+                  $.ajax({
+                      url:'/',
+                      type:'POST',
+                      dataType:'json',
+                      data: data2
+                })
+                })
+            })
+
+    </script>
 </head>
 
 <body>
     <div class="text-center">
-    {% block content %}
-    {% endblock %}
+        {% block content %}
+        {% endblock %}
     </div>
 </body>
 
