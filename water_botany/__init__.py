@@ -13,6 +13,7 @@ import time
 from flask_mail import Message
 from water_botany.config import Config
 import json
+import RPi.GPIO as GPIO
 
 
 def create_app():
@@ -81,13 +82,25 @@ def getDHTdata():
 app = create_app()
 
 
+def test_soil():
+    soil_channel = 21 #管脚40，参阅树莓派引脚图，物理引脚40对应的BCM编码为21
+    GPIO.setmode(GPIO.BCM)
+    GPIO.setup(soil_channel, GPIO.IN)
+
+    if GPIO.input(soil_channel) == GPIO.LOW:
+        print("潮湿")
+        return "潮湿"
+    else:
+        start_realy(3)
+        return "干燥"
+
 
 @app.route("/", methods=['GET', 'POST'])
 @login_required
 def index():
     timeNow = time.asctime(time.localtime(time.time()))
     temp, hum = getDHTdata()
-
+    soil_data = test_soil()
     temp = round(temp/25.1, 1)
     hum = round(hum/25.1, 1)
     if request.method == 'POST':
@@ -95,15 +108,16 @@ def index():
         if data['ok'] == 1:
             start_realy(3)
         elif data['ok'] == 2:
-            print("运行到这里")
+            # print("运行到这里")
             send_email(temp, hum)
-            print('运行结束')
+            # print('运行结束')
     
 
     templateData = {
       'time': timeNow,
       'temp': temp,
-      'hum': hum
+      'hum': hum,
+      'soil_data': soil_data
     }
     return render_template('index.html', templateData=templateData)
 
